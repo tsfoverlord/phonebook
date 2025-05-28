@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phonebook</title>
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <h2>Contact Information</h2>
+  <form action="#">
+    <label for="name">Name:</label><br />
+    <input type="text" id="name" name="name" required><br /><br />
+
+    <label for="phone">Phone Number:</label><br />
+    <input type="tel" id="phone" name="phone" required><br /><br />
+
+    <label for="email">Email:</label><br />
+    <input type="email" id="email" name="email" required><br /><br />
+
+    <button type="submit" id="add">Submit</button>
+  </form>
+  <table>
+    <thead>
+        <tr>
+            <th id="sort-btn">Name</th>
+            <th>Phone number</th>
+            <th>E mail</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Admin</td>
+            <td>1234567890</td>
+            <td>admin@admin.com</td>
+        </tr>
+    </tbody>
+  </table>
+</body>
+</html>
