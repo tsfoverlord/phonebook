@@ -27,13 +27,22 @@ submit.addEventListener("click",(e) =>{
         setErrorMessage(nameErrorSpan, 'Invalid name');
         isValidContact = false;
     }
+    else{
+        setErrorMessage(nameErrorSpan, '');
+    }
     if(!validator.isValidEmail(mail)){
         setErrorMessage(emailErrorSpan, 'Invalid email');
         isValidContact = false;
     }
+    else{
+        setErrorMessage(emailErrorSpan, '');
+    }
     if(!validator.isValidPhoneNumber(phone)){
         setErrorMessage(phoneErrorSpan, 'Invalid phone number');
         isValidContact = false;
+    }
+    else{
+        setErrorMessage(phoneErrorSpan, '');
     }
     if(!isValidContact) return;
 
