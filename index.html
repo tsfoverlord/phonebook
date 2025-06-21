@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Phonebook</title>
-  <script src="./script.js" defer></script>
+  <script src="./script.js" type="module" defer></script>
 </head>
 <body>
   <h2>Contact Information</h2>
   <form action="#">
     <label for="name">Name:</label><br />
-    <input type="text" id="name" name="name" required><br /><br />
+    <input type="text" id="name" name="name" required>
+    <span id="name-error" style="color:red"></span><br /><br />
 
     <label for="phone">Phone Number:</label><br />
-    <input type="tel" id="phone" name="phone" required><br /><br />
+    <input type="tel" id="phone" name="phone" required>
+    <span id="phone-error" style="color: red;"></span><br/><br/>
 
     <label for="email">Email:</label><br />
-    <input type="email" id="email" name="email" required><br /><br />
-
+    <input type="email" id="email" name="email" required>
+    <span id="email-error" style="color: red;"></span><br/><br/>
+    
     <button type="submit" id="add">Submit</button>
   </form>
   <table>

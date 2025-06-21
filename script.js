@@ -5,6 +5,14 @@ const table = document.querySelector('tbody');
 const submit = document.getElementById('add');
 const sort_btn = document.getElementById('sort-btn');
 
+const nameErrorSpan = document.querySelector('#name-error');
+const emailErrorSpan = document.querySelector('#email-error');
+const phoneErrorSpan = document.querySelector('#phone-error');
+
+
+import createValidator from "./validation.js";
+const validator = createValidator();
+
 let asc = true;
 
 let contacts = [{name:'Admin', phone:1234567890, mail:'admin@admin.com'},               
@@ -14,6 +22,22 @@ submit.addEventListener("click",(e) =>{
     const name = uname.value;
     const phone = number.value;
     const mail = email.value;
+    let isValidContact = true;
+    if(!validator.isValidName(name)){
+        setErrorMessage(nameErrorSpan, 'Invalid name');
+        isValidContact = false;
+    }
+    if(!validator.isValidEmail(mail)){
+        setErrorMessage(emailErrorSpan, 'Invalid email');
+        isValidContact = false;
+    }
+    if(!validator.isValidPhoneNumber(phone)){
+        setErrorMessage(phoneErrorSpan, 'Invalid phone number');
+        isValidContact = false;
+    }
+    if(!isValidContact) return;
+
+    clearErrorMessages();
     contacts.push({name, phone, mail});
     let row = document.createElement('tr');
     row.innerHTML = `<td>${name}</td>
@@ -43,3 +67,12 @@ function renderTable() {
     table.appendChild(row);
     });
 }
+
+function setErrorMessage(span, msg){
+    span.textContent = msg;
+}
+ function clearErrorMessages() {
+    setErrorMessage(nameErrorSpan, '');
+    setErrorMessage(emailErrorSpan, '');
+    setErrorMessage(phoneErrorSpan, '');
+ }
