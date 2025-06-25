@@ -10,45 +10,40 @@ const emailErrorSpan = document.querySelector('#email-error');
 const phoneErrorSpan = document.querySelector('#phone-error');
 
 
-import createValidator from "./validation.js";
-const validator = createValidator();
+import createContact from "./model.js";
 
 let asc = true;
-
-let contacts = [{name:'Admin', phone:1234567890, mail:'admin@admin.com'},               
-];
-submit.addEventListener("click",(e) =>{
+const { contact } = createContact('Admin', '9234567890', 'admin@admin.com');
+let contacts = [contact];
+renderTable();
+submit.addEventListener("click", (e) => {
     e.preventDefault();
     const name = uname.value;
     const phone = number.value;
     const mail = email.value;
-    let isValidContact = true;
-    if(!validator.isValidName(name)){
-        setErrorMessage(nameErrorSpan, 'Invalid name');
-        isValidContact = false;
-    }
-    if(!validator.isValidEmail(mail)){
-        setErrorMessage(emailErrorSpan, 'Invalid email');
-        isValidContact = false;
-    }
-    if(!validator.isValidPhoneNumber(phone)){
-        setErrorMessage(phoneErrorSpan, 'Invalid phone number');
-        isValidContact = false;
-    }
-    if(!isValidContact) return;
-
-    clearErrorMessages();
-    contacts.push({name, phone, mail});
-    let row = document.createElement('tr');
-    row.innerHTML = `<td>${name}</td>
+    const { errors, contact } = createContact(name, phone, mail);
+    //If errors object is empty
+    if (Object.keys(errors).length === 0) {
+        clearErrorMessages();
+        contacts.push(contact);
+        let row = document.createElement('tr');
+        row.innerHTML = `<td>${name}</td>
                      <td>${phone}</td>
                      <td>${mail}</td>`
-    table.appendChild(row);
+        table.appendChild(row);
+
+    }
+    else {
+        setErrorMessage(nameErrorSpan, errors.name || "");
+        setErrorMessage(phoneErrorSpan, errors.phone || "");
+        setErrorMessage(emailErrorSpan, errors.mail || "");
+    }
+
 });
 
-sort_btn.addEventListener("click" , (e) => {
+sort_btn.addEventListener("click", (e) => {
     // console.log(asc);
-    contacts = contacts.sort((c1, c2)=>{
+    contacts = contacts.sort((c1, c2) => {
         console.table(c1);
         return asc ? c1.name.localeCompare(c2.name, 'en') : c2.name.localeCompare(c1.name, 'en');
     });
@@ -60,19 +55,19 @@ function renderTable() {
     // console.table(contacts);
     table.innerHTML = "";
     contacts.forEach((contact) => {
-         let row = document.createElement('tr');
-    row.innerHTML = `<td>${contact.name}</td>
+        let row = document.createElement('tr');
+        row.innerHTML = `<td>${contact.name}</td>
                      <td>${contact.phone}</td>
                      <td>${contact.mail}</td>`
-    table.appendChild(row);
+        table.appendChild(row);
     });
 }
 
-function setErrorMessage(span, msg){
+function setErrorMessage(span, msg) {
     span.textContent = msg;
 }
- function clearErrorMessages() {
+function clearErrorMessages() {
     setErrorMessage(nameErrorSpan, '');
     setErrorMessage(emailErrorSpan, '');
     setErrorMessage(phoneErrorSpan, '');
- }
+}
